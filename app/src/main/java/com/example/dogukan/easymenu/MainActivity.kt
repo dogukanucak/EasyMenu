@@ -4,14 +4,17 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.dogukan.easymenu.Adapter.MenuAdapter
+import com.example.dogukan.easymenu.Callback.AdapterItemListener
 import com.example.dogukan.easymenu.Model.menuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterItemListener {
     private var myAdapter: MenuAdapter? = null
     private var arrayList: ArrayList<menuItem>? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -22,6 +25,16 @@ class MainActivity : AppCompatActivity() {
         initialize()
         setupList()
         loaddata()
+    }
+
+    override fun onClick(pos: Int)
+    {
+        println("CLICKED!.................")
+        Toast.makeText(this, "Clicked To Item"+ pos , Toast.LENGTH_SHORT).show()
+    }
+    override fun onLongClick(pos: Int)
+    {
+        Toast.makeText(this, "Long Clicked To Item"+ pos , Toast.LENGTH_SHORT).show()
     }
 
     private fun loaddata() {
@@ -48,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // rlItems = findViewById(R.id.rlItems) as RecyclerView
         arrayList = ArrayList<menuItem>()
         layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        myAdapter = MenuAdapter(arrayList!!, this, R.layout.item_cell)
+        myAdapter = MenuAdapter(arrayList!!, this,this)
 
     }
 }
