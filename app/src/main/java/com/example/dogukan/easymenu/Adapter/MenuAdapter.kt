@@ -42,6 +42,15 @@ internal class MenuAdapter(private val arrayList: ArrayList<menuItem>,
     internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(items: menuItem,context: Context, pos: Int, listener: AdapterItemListener) {
+            itemView.setOnLongClickListener {
+                listener.onLongClick(pos)
+                true
+            }
+
+            itemView.setOnClickListener {
+                listener.onClick(pos)
+            }
+
             if(items.available == true)
             {
                 itemView.item_cell_layout.setBackgroundColor(Color.GREEN)

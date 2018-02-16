@@ -1,10 +1,15 @@
 package com.example.dogukan.easymenu
 
+import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
+import android.text.InputType.TYPE_CLASS_TEXT
 import android.util.Log
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.dogukan.easymenu.Adapter.MenuAdapter
@@ -29,13 +34,31 @@ class MainActivity : AppCompatActivity(), AdapterItemListener {
 
     override fun onClick(pos: Int)
     {
-        println("CLICKED!.................")
-        Toast.makeText(this, "Clicked To Item"+ pos , Toast.LENGTH_SHORT).show()
+        alert(pos)
     }
     override fun onLongClick(pos: Int)
     {
         Toast.makeText(this, "Long Clicked To Item"+ pos , Toast.LENGTH_SHORT).show()
     }
+
+   private fun alert(pos: Int)
+   {
+       var m_Text: String? = null
+       val builder = AlertDialog.Builder(this)
+       builder.setTitle("Title")
+
+       val input = EditText(this)
+
+       input.inputType = TYPE_CLASS_TEXT
+       builder.setView(input)
+
+
+       builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which -> m_Text = input.text.toString() })
+       builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+       builder.show()
+
+
+   }
 
     private fun loaddata() {
 
